@@ -1,0 +1,139 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>INPHA — Figma Import Launcher</title>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --blue:#2B6CB0;
+  --blue-d:#154B86;
+  --paper:#F7F9FC;
+  --ink:#123761;
+  --mute:#4D6480;
+  --orange:#F59E0B;
+}
+body{
+  font:15px/1.6 Inter,system-ui,sans-serif;
+  margin:0;
+  background:var(--paper);
+  color:var(--ink);
+  padding:40px 48px;
+  -webkit-font-smoothing:antialiased;
+}
+h1{
+  font:500 32px Fraunces,serif;
+  margin:0 0 8px;
+  color:var(--blue-d);
+}
+.lead{
+  color:var(--mute);
+  margin:0 0 24px;
+}
+.box{
+  background:#fff;
+  border:1px solid rgba(18,55,97,.14);
+  border-left:4px solid var(--orange);
+  border-radius:14px;
+  padding:22px 26px;
+  max-width:960px;
+  box-shadow:0 4px 16px rgba(18,55,97,.06);
+  margin-bottom:32px;
+}
+.box b{color:var(--ink)}
+.box ol{margin:12px 0 0;padding-left:22px}
+.box li{margin-bottom:8px}
+table{
+  border-collapse:collapse;
+  width:100%;
+  max-width:960px;
+  background:#fff;
+  border-radius:16px;
+  overflow:hidden;
+  box-shadow:0 4px 16px rgba(18,55,97,.06);
+  border:1px solid rgba(18,55,97,.12);
+}
+th{
+  background:var(--ink);
+  color:#fff;
+  font:600 13px Inter;
+  letter-spacing:.06em;
+  text-transform:uppercase;
+  padding:14px 18px;
+  text-align:left;
+}
+td{
+  border-bottom:1px solid rgba(18,55,97,.08);
+  padding:12px 18px;
+  font-size:14.5px;
+}
+tr:last-child td{border-bottom:0}
+tr:hover td{background:#F1F6FC}
+a.link{
+  display:inline-block;
+  padding:4px 12px;
+  border-radius:999px;
+  background:rgba(43,108,176,.1);
+  color:var(--blue-d);
+  font-weight:600;
+  text-decoration:none;
+  transition:background .15s,color .15s;
+}
+a.link:hover{
+  background:var(--blue);
+  color:#fff;
+}
+</style>
+</head>
+<body>
+
+<h1>INPHA — Figma Import Launcher</h1>
+<p class="lead">Open any frame at its target width without review chrome, ready for immediate 1-click capture by the <b>html.to.design</b> Chrome extension.</p>
+
+<div class="box" style="border-left-color:var(--blue);background:linear-gradient(135deg,#fff,#F0F7FF);margin-bottom:24px;">
+  <b style="font-size:16px;color:var(--blue-d);">⚡ NEW: Figma Motion &amp; Interactive Component Kit</b>
+  <p style="margin:8px 0 14px;color:var(--ink);">
+    Need interactive components and Smart Animate prototyping in Figma? We have built a dedicated component variant matrix showing Resting, Hover, Pressed, and Expanded states side-by-side with exact Figma prototype timing blueprints.
+  </p>
+  <a class="link" href="figma-components.html" style="background:var(--blue);color:#fff;padding:8px 18px;font-size:14px;">Open Figma Motion Kit (figma-components.html) ↗</a>
+</div>
+
+<div class="box">
+  <b>Step-by-step workflow for Figma</b>
+  <ol>
+    <li>Install the <b>html.to.design</b> extension in Chrome and its companion plugin in Figma (by divRIOTS).</li>
+    <li>Serve this project locally via <code>python3 -m http.server 8765</code> and open <code>http://localhost:8765/figma-import.html</code> in Chrome (local web server required; <code>file://</code> URLs cannot be captured).</li>
+    <li>Click any viewport link below. All frames open in <code>static=1</code> capture mode (elements render immediately at full opacity without waiting for scroll reveals or CSS transitions).</li>
+    <li>Trigger the html.to.design Chrome extension, confirm the viewport width (1440, 820, or 390), and click <b>Import to Figma</b>.</li>
+    <li>For interactive animations, import <b><a href="figma-components.html" target="_blank">figma-components.html</a></b> &rarr; select rows &rarr; <b>Combine as Variants</b> &rarr; connect with <b>While Hovering &rarr; Smart Animate</b>.</li>
+    <li>Fonts (Fraunces and Inter) are native to Google Fonts and load automatically in Figma.</li>
+  </ol>
+</div>
+
+<table id="t">
+  <tr>
+    <th style="width:60px">#</th>
+    <th>Page</th>
+    <th style="width:180px">Desktop 1440</th>
+    <th style="width:160px">Tablet 820</th>
+    <th style="width:160px">Mobile 390</th>
+  </tr>
+</table>
+
+<script src="data.js"></script>
+<script>
+const t = document.getElementById('t');
+PAGES.forEach(p => {
+  const L = w => `<a class="link" target="_blank" href="index.html?p=${p.id}&w=${w}&static=1">${w} px ↗</a>`;
+  t.insertAdjacentHTML('beforeend', `
+    <tr>
+      <td><b>${p.n}</b></td>
+      <td><b>${p.title}</b></td>
+      <td>${L(1440)}</td>
+      <td>${(p.id==='home'||p.id==='school') ? L(820) : '<span style="color:#A0AEC0">—</span>'}</td>
+      <td>${L(390)}</td>
+    </tr>`);
+});
+</script>
+</body>
+</html>

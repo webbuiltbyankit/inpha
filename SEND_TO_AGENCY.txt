@@ -1,0 +1,47 @@
+INPHA Website Concept — Modern UI/UX Enhancement & Motion Design (v3.1)
+
+What was enhanced:
+- Visual Language Modernization:
+  * Brand palette anchored to approved colors: Primary Blue (#2B6CB0), Growth Green (#22C55E), Energy Orange (#F59E0B), Deep Blue (#154B86), and Text Navy (#123761).
+  * Layered elevations (--sh-1, --sh-2, --sh-3) and refined border radii (16px cards, 24px/32px dark stages, pill buttons).
+  * Asymmetrical hero compositions with ambient background mesh orbs, floating verification badges, and responsive visual stacking.
+  * Deep gradient entry doors with watermark numerals (01/02) and circular hover indicators.
+  * Modern card grids with custom inline SVG icons, subtle hover lifts, and structured Case Study layouts.
+  * Upgraded header with frosted glass backdrop, services mega-menu, and slide-in mobile navigation drawer.
+
+- Motion & Interaction Design:
+  * Staggered hero entrance sequences (450–750ms ease-out curves).
+  * Scroll-triggered reveal animations via lightweight IntersectionObserver.
+  * Responsive interactive tab switching for Student Programs (Summer / Winter / Workshops).
+  * Smooth accordion expansion for FAQs.
+  * Ambient floating animation for verification badges.
+  * Micro-animations for buttons, chips, arrows, and card zooms.
+- Figma Animation & Smart Animate Kit:
+  * Dedicated Interactive Component Matrix (figma-components.html) with Resting, Hover, Pressed, and Open states side-by-side for instant Figma import via html.to.design.
+  * Exact Figma Smart Animate connection specs (While Hovering -> Smart Animate 200ms Ease Out, On Click -> Gentle Spring 350ms, After Delay loops for floating badges and pulse radar).
+  * Live pulsing radar status badges (● 100% Policy Compliant, ● Admissions Open 2026).
+  * Smooth stats counter count-up animation on scroll.
+  * Shimmer reflections on primary CTA buttons and subtle gradient borders on card hover.
+
+Main files:
+- index.html                -> Interactive review board with motion toggle and frame inspect links
+- figma-components.html     -> Interactive Figma component states & Smart Animate prototyping kit
+- inpha.css                 -> Complete design system tokens, modern styling, and motion layer
+- hifi.js                   -> High-fidelity component renderer and interaction engine
+- data.js                   -> Approved content structure, services taxonomy, and verified client placeholders
+- deck.html                 -> Updated 1920x1080 client presentation deck with motion specifications
+- figma-import.html         -> html.to.design capture launcher with static mode URLs
+- handoff/HANDOFF.md        -> Comprehensive technical handoff documentation (v3.1)
+- handoff/tokens.json       -> Design tokens in JSON format
+- assets/                   -> Approved logos and brand marks
+
+How to review locally:
+1. Open Terminal in this folder.
+2. Run: python3 -m http.server 8765
+3. Open: http://localhost:8765/index.html
+4. Figma Motion Kit: http://localhost:8765/figma-components.html
+5. Presentation deck: http://localhost:8765/deck.html
+
+Suggested client share options:
+A) Share the live preview on GitHub Pages, Netlify, or Vercel.
+B) Present deck.html directly in Chrome full-screen (F11 / Cmd+Shift+F).

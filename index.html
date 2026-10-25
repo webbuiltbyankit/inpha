@@ -1,0 +1,569 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>INPHA — Stage 3: Modern High-Fidelity UI & Motion Prototype</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link
+    href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=Inter:wght@400;500;600;700&family=Noto+Sans+Devanagari:wght@400;600&family=Noto+Serif+Devanagari:wght@500;600&display=swap"
+    rel="stylesheet">
+  <link rel="stylesheet" href="inpha.css">
+  <style>
+    :root {
+      --canvas: #0F172A;
+      --canvas-bar: #0B1120;
+      --canvas-card: #1E293B;
+      --canvas-border: rgba(255, 255, 255, .08);
+      --canvas-text: #F8FAFC;
+      --canvas-mute: #94A3B8;
+    }
+
+    body {
+      margin: 0;
+      background: var(--canvas);
+      background-image: radial-gradient(rgba(255, 255, 255, .07) 1px, transparent 1px);
+      background-size: 24px 24px;
+      font: 14px/1.5 Inter, system-ui, sans-serif;
+      color: var(--canvas-text);
+      -webkit-font-smoothing: antialiased;
+    }
+
+    body.solo {
+      background: var(--paper);
+      background-image: none;
+    }
+
+    body.solo #top,
+    body.solo .note,
+    body.solo .sys {
+      display: none
+    }
+
+    /* Top bar */
+    #top {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: rgba(11, 17, 32, .92);
+      -webkit-backdrop-filter: blur(16px);
+      backdrop-filter: blur(16px);
+      border-bottom: 1px solid var(--canvas-border);
+      color: #fff;
+      padding: 14px 24px;
+    }
+
+    .top-inner {
+      max-width: 1720px;
+      margin: 0 auto;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 20px;
+      flex-wrap: wrap;
+    }
+
+    .top-brand {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+
+    .top-brand img {
+      height: 32px;
+      width: auto
+    }
+
+    .top-title {
+      font: 600 15px/1.2 Inter;
+      margin: 0
+    }
+
+    .top-title span {
+      display: block;
+      font-size: 12px;
+      color: var(--canvas-mute);
+      font-weight: 400;
+      margin-top: 2px
+    }
+
+    .top-actions {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .top-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 7px 14px;
+      border-radius: 999px;
+      border: 1px solid var(--canvas-border);
+      background: rgba(255, 255, 255, .06);
+      color: #fff;
+      font: 600 12.5px Inter;
+      text-decoration: none;
+      transition: background .2s, border-color .2s, transform .2s;
+      cursor: pointer;
+    }
+
+    .top-btn:hover {
+      background: rgba(255, 255, 255, .14);
+      border-color: rgba(255, 255, 255, .24);
+      transform: translateY(-1px);
+    }
+
+    .top-btn.active {
+      background: var(--orange);
+      color: var(--ink);
+      border-color: var(--orange);
+    }
+
+    #toc {
+      max-width: 1720px;
+      margin: 10px auto 0;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px 12px;
+      padding-top: 10px;
+      border-top: 1px solid rgba(255, 255, 255, .06);
+    }
+
+    #toc a {
+      color: var(--canvas-mute);
+      font-size: 12px;
+      text-decoration: none;
+      padding: 3px 8px;
+      border-radius: 6px;
+      transition: color .15s, background .15s;
+    }
+
+    #toc a:hover {
+      color: #fff;
+      background: rgba(255, 255, 255, .08)
+    }
+
+    /* Note Banner */
+    .note {
+      max-width: 1720px;
+      margin: 24px auto 16px;
+      padding: 0 24px;
+    }
+
+    .note-box {
+      background: linear-gradient(135deg, rgba(30, 41, 59, .85), rgba(15, 23, 42, .95));
+      border: 1px solid var(--canvas-border);
+      border-left: 4px solid var(--orange);
+      padding: 16px 20px;
+      border-radius: 12px;
+      font-size: 13.5px;
+      line-height: 1.6;
+      color: #CBD5E1;
+    }
+
+    .note-box b {
+      color: #fff
+    }
+
+    .note-box span.pl {
+      color: #FCD34D;
+      border-bottom: 1px dashed #FCD34D
+    }
+
+    /* System Sheet */
+    .sys {
+      max-width: 1720px;
+      margin: 32px auto 72px;
+      padding: 0 24px;
+    }
+
+    .sys .sheet {
+      background: #fff;
+      color: var(--ink);
+      border-radius: 24px;
+      padding: 44px;
+      display: grid;
+      gap: 40px;
+      box-shadow: 0 20px 40px -15px rgba(0, 0, 0, .3);
+    }
+
+    .pgh {
+      border-bottom: 2px solid var(--canvas-border);
+      margin-bottom: 20px;
+      padding-bottom: 14px;
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+    }
+
+    .pgh h2 {
+      margin: 0;
+      font: 500 28px Fraunces, serif;
+      color: #fff;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .pgh h2 span {
+      background: linear-gradient(135deg, var(--orange), var(--orange-d));
+      color: var(--ink);
+      font: 700 13px/1 Inter;
+      padding: 6px 10px;
+      border-radius: 999px;
+      letter-spacing: .04em;
+    }
+
+    .pgh p {
+      margin: 0;
+      color: var(--canvas-mute);
+      font-size: 13.5px;
+    }
+
+    .pgh p b {
+      color: #CBD5E1
+    }
+
+    .sw {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+      gap: 12px;
+    }
+
+    .sw div {
+      padding: 50px 14px 14px;
+      font: 600 11.5px/1.35 Inter;
+      border-radius: 14px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, .08);
+    }
+
+    .sys h3 {
+      font: 500 22px Fraunces, serif;
+      margin: 0 0 12px;
+      color: var(--ink);
+    }
+
+    .demo {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      align-items: center
+    }
+
+    .row2 {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 44px
+    }
+
+    .mega {
+      display: grid;
+      grid-template-columns: 1fr 1.2fr;
+      gap: 0;
+      border-radius: 16px;
+      overflow: hidden;
+      border: 1px solid var(--line);
+      background: var(--paper);
+      max-width: 640px;
+      box-shadow: var(--sh-1);
+    }
+
+    .mega div {
+      padding: 22px
+    }
+
+    .mega div+div {
+      border-left: 1px solid var(--line);
+      background: #fff
+    }
+
+    .mega b {
+      font: 700 11px Inter;
+      letter-spacing: .14em;
+      text-transform: uppercase;
+      color: var(--orange-t);
+      display: block;
+      margin-bottom: 8px;
+    }
+
+    .mega p {
+      margin: 4px 0;
+      font-weight: 600
+    }
+
+    .mega small {
+      color: var(--mute)
+    }
+
+    /* Review Pages Canvas */
+    .pg {
+      max-width: 1720px;
+      margin: 0 auto 80px;
+      padding: 0 24px;
+    }
+
+    .boards {
+      display: flex;
+      gap: 32px;
+      align-items: flex-start;
+      overflow-x: auto;
+      padding-bottom: 16px;
+    }
+
+    .board-col {
+      flex: none;
+    }
+
+    .board-h {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin: 0 0 10px;
+    }
+
+    .board-h h4 {
+      margin: 0;
+      font: 600 12px Inter;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+      color: var(--canvas-mute);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .board-h h4:before {
+      content: "";
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--green);
+    }
+
+    .board-inspect {
+      color: var(--orange);
+      font: 600 11.5px Inter;
+      text-decoration: none;
+      padding: 3px 8px;
+      border-radius: 6px;
+      background: rgba(245, 158, 11, .12);
+      transition: background .15s;
+    }
+
+    .board-inspect:hover {
+      background: rgba(245, 158, 11, .24);
+    }
+
+    .z-d {
+      zoom: .52
+    }
+
+    .z-t {
+      zoom: .62
+    }
+
+    .z-m {
+      zoom: .82
+    }
+
+    .z-d>div,
+    .z-t>div,
+    .z-m>div {
+      border-radius: 24px;
+      overflow: hidden;
+      box-shadow: 0 24px 60px -15px rgba(0, 0, 0, .6), 0 0 0 1px rgba(255, 255, 255, .1);
+    }
+  </style>
+</head>
+
+<body>
+
+  <div id="top">
+    <div class="top-inner">
+      <div class="top-brand">
+        <img src="assets/logo-mark.png" alt="INPHA Logo">
+        <div class="top-title">
+          INPHA — Modern UI/UX Enhancement &amp; Motion Design Prototype
+          <span>Approved Brand Foundation · Stage 3 High-Fidelity Interactive Preview</span>
+        </div>
+      </div>
+      <div class="top-actions">
+        <a class="top-btn" href="figma-components.html" target="_blank" title="Figma Interactive Component & Motion Kit"
+          style="border-color:rgba(139,92,246,.5);background:rgba(139,92,246,.15);color:#E2E8F0;">⚡ Figma Motion Kit</a>
+        <a class="top-btn" href="deck.html" target="_blank" title="Open Presentation Deck">📊 Presentation Deck</a>
+        <a class="top-btn" href="figma-import.html" target="_blank" title="Figma Import Launcher">📐 Figma Capture
+          Launcher</a>
+        <button class="top-btn active" id="btn-motion" type="button" title="Toggle Interaction & Motion Preview">⚡
+          Motion: Active</button>
+      </div>
+    </div>
+    <nav id="toc" aria-label="Page Index"></nav>
+  </div>
+
+  <div class="note">
+    <div class="note-box">
+      <b>Reviewer Guide.</b> Every page is presented at <b>1440 px Desktop</b> and <b>390 px Mobile</b> (with <b>820 px
+        Tablet</b> for Home and School Care). Layouts reflow fluidly using CSS container queries.
+      Dashed brown text marks <span class="pl">[placeholders]</span> awaiting authentic client assets; no facts,
+      statistics, or client quotes have been fabricated.
+      All motion uses natural ease-out curves (150–250ms hovers, 350ms components, 650ms entrances). Click <b>"⚡
+        Motion"</b> above to toggle between live interactive animations and static snapshot mode for Figma capture /
+      screenshots.
+    </div>
+  </div>
+
+  <section class="sys" id="system">
+    <div class="pgh">
+      <h2><span>DS</span> Design System Sheet</h2>
+      <p>Approved Brand System · 8pt Grid · Fluid Container Hierarchy</p>
+    </div>
+    <div class="sheet">
+      <div>
+        <h3>Brand Colour Palette &amp; Functional Roles</h3>
+        <div class="sw">
+          <div style="background:#2B6CB0;color:#fff">Primary Blue<br>#2B6CB0<br>Core Brand · Trust &amp; Structure</div>
+          <div style="background:#22C55E;color:#0F2743">Growth Green<br>#22C55E<br>Learning, Youth &amp; Vitality</div>
+          <div style="background:#F59E0B;color:#0F2743">Energy Orange<br>#F59E0B<br>Action, Accents &amp; CTAs</div>
+          <div style="background:#154B86;color:#fff">Deep Blue<br>#154B86<br>Dark Hero &amp; Dimensional Stages</div>
+          <div style="background:#F7F9FC;color:#123761;border:1px solid #E2E8F0">Soft Background<br>#F7F9FC<br>Premium
+            Base Surface</div>
+          <div style="background:#123761;color:#fff">Text Navy<br>#123761<br>High-Contrast Typography</div>
+          <div style="background:#DCEEFF;color:#123761">Sky Tint<br>#DCEEFF<br>Supporting Light Surface</div>
+          <div style="background:#0F2743;color:#fff">Tech Navy<br>#0F2743<br>Tech Solutions &amp; Code Stages</div>
+          <div style="background:#15803D;color:#fff">Success Green<br>#15803D<br>WCAG AA Compliant Accent</div>
+          <div style="background:#B3261E;color:#fff">Alert Red<br>#B3261E<br>Form Validation State</div>
+        </div>
+        <p style="max-width:96ch;color:var(--mute);margin-top:14px;font-size:14px">
+          The approved brand palette anchors the enhanced interface. Blue creates institutional confidence, green
+          emphasizes student progress and learning, and energy orange drives interactive calls to action. Rich
+          gradients, soft mesh orbs, and layered shadows (<code>--sh-1</code> to <code>--sh-3</code>) replace flat
+          outlines with agency-grade depth. Contrast verified against WCAG AA standards.
+        </p>
+      </div>
+
+      <div class="row2">
+        <div>
+          <h3>Typography Hierarchy</h3>
+          <p style="font:500 52px/1.05 Fraunces,serif;margin:0 0 6px">Fraunces Display 500</p>
+          <p style="font:600 26px Fraunces,serif;margin:6px 0">Headings H2 / H3 — Fraunces 600</p>
+          <p style="margin:6px 0;font-size:16px;color:var(--mute)">Body Copy — Inter 400/500/600, 16–17px, line-height
+            1.65</p>
+          <p style="font:600 26px 'Noto Serif Devanagari',serif;margin:18px 0 6px">हिंदी शीर्षक — Noto Serif Devanagari
+          </p>
+          <p
+            style="font-size:16px;margin:0;font-family:'Noto Sans Devanagari',sans-serif;line-height:1.7;color:var(--mute)">
+            बच्चों और व्यवसायों के विकास के लिए एक टीम — हिंदी पाठ — Noto Sans Devanagari</p>
+        </div>
+
+        <div>
+          <h3>Interactive Buttons &amp; Badges</h3>
+          <div class="demo">
+            <a class="btn p arrow" href="#" onclick="return false">Primary CTA</a>
+            <a class="btn s2 arrow" href="#" onclick="return false">Secondary</a>
+            <a class="btn g arrow" href="#" onclick="return false">Ghost</a>
+            <a class="btn sm p" href="#" onclick="return false">Small</a>
+          </div>
+          <div class="demo" style="margin-top:18px">
+            <span class="chip on">Active Filter</span>
+            <span class="chip">Category</span>
+            <span class="chip">Tag</span>
+          </div>
+          <div style="margin-top:20px;display:flex;gap:14px;align-items:center">
+            <p class="tag" style="margin:0"><b>04</b>Signature Index Tag</p>
+            <span class="ic g" aria-hidden="true"><svg viewBox="0 0 24 24" width="20" height="20" fill="none"
+                stroke="currentColor" stroke-width="2">
+                <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10Z" />
+              </svg></span>
+            <span class="ic o" aria-hidden="true"><svg viewBox="0 0 24 24" width="20" height="20" fill="none"
+                stroke="currentColor" stroke-width="2">
+                <circle cx="12" cy="12" r="9" />
+              </svg></span>
+          </div>
+          <p class="hint" style="margin-top:14px">
+            Elevation: <code>--sh-1</code> subtle, <code>--sh-2</code> card lift, <code>--sh-3</code> floating dialogs.
+            Radius: 16px cards, 24px stages, pill buttons.
+          </p>
+        </div>
+      </div>
+
+      <div class="row2">
+        <div>
+          <h3>Form States &amp; Validation</h3>
+          <div class="field" style="margin-bottom:14px">
+            <label>Default State</label>
+            <input class="input" placeholder="School or Organization Name">
+          </div>
+          <div class="field" style="margin-bottom:14px">
+            <label>Focus State (4px Blue Glow)</label>
+            <input class="input" style="border-color:#2B6CB0;box-shadow:0 0 0 4px rgba(43,108,176,.2)"
+              value="inquiry@school.edu">
+          </div>
+          <div class="field" style="margin-bottom:14px">
+            <label>Error State <em>*</em></label>
+            <input class="input err" value="98765" aria-invalid="true">
+            <div class="msg-err">Enter a 10-digit phone number so we can call you back.</div>
+          </div>
+          <div class="success">
+            <h3 style="font-size:18px;margin:0 0 4px">Submission Received</h3>
+            <p class="hint" style="margin:0">Thank you. Our team will review your enquiry promptly.</p>
+          </div>
+        </div>
+
+        <div>
+          <h3>Services Navigation &amp; Mega-Menu</h3>
+          <div class="mega">
+            <div>
+              <b>School &amp; Student</b>
+              <p>School Care</p>
+              <small style="display:block;margin-bottom:10px">Policy, teacher training &amp; campus setup</small>
+              <p>Student Programs</p>
+              <small>Camps, outdoor &amp; skill workshops</small>
+            </div>
+            <div>
+              <b>Tech &amp; Creative</b>
+              <p>Tech Solutions</p>
+              <p style="padding-left:14px;font-size:14px"><small>App &amp; Web Development</small></p>
+              <p style="padding-left:14px;font-size:14px"><small>Creative Studio</small></p>
+              <p style="padding-left:14px;font-size:14px"><small>Social Media Marketing</small></p>
+            </div>
+          </div>
+          <p class="hint" style="margin-top:14px">
+            Desktop: Smooth fade &amp; scale mega-menu on hover/focus. Mobile: Slide-in navigation drawer with "I am a…
+            School / Parent / Business" quick shortcuts and persistent bottom contact bar.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div id="pages"></div>
+
+  <script src="data.js"></script>
+  <script src="hifi.js"></script>
+  <script>
+    // Motion toggle button handler
+    (function () {
+      const btn = document.getElementById('btn-motion');
+      if (!btn) return;
+      let active = true;
+      btn.addEventListener('click', function () {
+        active = !active;
+        if (active) {
+          document.documentElement.classList.remove('static');
+          document.documentElement.classList.add('mo');
+          btn.textContent = '⚡ Motion: Active';
+          btn.classList.add('active');
+        } else {
+          document.documentElement.classList.remove('mo');
+          document.documentElement.classList.add('static');
+          btn.textContent = '⏸ Motion: Static Mode';
+          btn.classList.remove('active');
+        }
+      });
+    })();
+  </script>
+</body>
+
+</html>
